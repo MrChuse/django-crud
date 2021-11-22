@@ -1,12 +1,23 @@
-<form action="{% url 'api:vote' question.id %}" method="post">
+<form action="{% url 'api:vote' survey.id %}" method="post">
 {% csrf_token %}
+
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+{% for question in survey.question_set.all %}
+
 <fieldset>
     <legend><h1>{{ question.question_text }}</h1></legend>
-    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+    {% if not question.multiple_choice %}
+        <input type="text" name="{{question}}" id="{{question.id}}.{{ forloop.counter }}" value="{{ choice.id }}">
+    {% else %}
     {% for choice in question.choice_set.all %}
-        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+        <input type="radio" name="{{question}}" id="{{question.id}}.{{ forloop.counter }}" value="{{ choice.id }}">
         <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
     {% endfor %}
+    {% endif %}
 </fieldset>
+
+{% endfor %}
 <input type="submit" value="Vote">
 </form>

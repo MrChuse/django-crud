@@ -1,0 +1,17 @@
+<h1>{{ username }}</h1>
+
+{% for qca_el in qca %}
+
+<h3>{{qca_el.question.question_text}}</h3>
+<p>{{ qca_el.answer.choice_text }}</p>
+
+{% endfor %}
+
+{% for qa_el in qa %}
+
+<h3>{{qa_el.question.question_text}}</h3>
+<p>{{ qa_el.answer }}</p>
+
+{% endfor %}
+
+<p><a href="/">Surveys list</a></p>

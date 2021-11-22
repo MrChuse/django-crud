@@ -1,9 +1,24 @@
-<h1>{{ question.question_text }}</h1>
+<h1>{{ survey.name}}</h1>
 
-<ul>
-{% for choice in question.choice_set.all %}
-    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+{% for question in survey.question_set.all %}
+
+<h3>{{question.question_text}}</h3>
+
+{% if question.multiple_choice %}
+    <ul>
+    {% for choice in question.choice_set.all %}
+        <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <ul>
+    {% for answer in question.questionanswers_set.all %}
+        <li>{{ answer.answer }}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+
+
 {% endfor %}
-</ul>
-
-<a href="{% url 'api:detail' question.id %}">Vote again?</a>
+<p><a href="{% url 'api:detail' survey.id %}">Vote again?</a></p>
+<p><a href="/">Surveys list</a></p>
