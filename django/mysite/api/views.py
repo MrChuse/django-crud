@@ -46,7 +46,7 @@ def vote(request, question_id):
     
     if request.user.is_anonymous:
         login_ = f'Anon{User.objects.count()+1}'
-        user = User.objects.create_user(login, f'{login}@anon.com', login)
+        user = User.objects.create_user(login_, f'{login}@anon.com', login_)
         login(request, user)
     
     try:

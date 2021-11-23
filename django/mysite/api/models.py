@@ -12,7 +12,6 @@ class Survey(models.Model):
 class Question(models.Model):
     survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
     question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published')
     multiple_choice = models.BooleanField(default=True)
     
     def __str__(self):
